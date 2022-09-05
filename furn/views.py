@@ -1,5 +1,3 @@
-from re import search
-from turtle import title
 from django.shortcuts import render, redirect, reverse
 from django.views import generic
 from furn.models import *
