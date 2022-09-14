@@ -13,12 +13,32 @@
                         <img src="{{ y.img.url }}" alt="feature image" width="300" >
                         <div class="single-feature-txt text-center">
                             <p>
-                                <i class="fa fa-star"></i>
+                                <!-- <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <span class="spacial-feature-icon"><i class="fa fa-star"></i></span>
-                                <span class="feature-review">(45 review)</span>
+                                <span class="feature-review">(45 review)</span> -->
+                                {% if  rate %}
+            <img src="{{ rate.image.url }}" alt="" width="300">
+            <a href="{% url 'furn:rate' %}"><button class="btn btn-primary">Next</button></a>
+            <form class="rate-form" method="POST" id="{{ rate.id }}">
+                {% csrf_token %}
+                <button type="submit" class="fa fa-star fa-3x btns" id="first"></button>
+                <button type="submit" class="fa fa-star fa-3x btns" id="second"></button>
+                <button type="submit" class="fa fa-star fa-3x btns" id="third"></button>
+                <button type="submit" class="fa fa-star fa-3x btns" id="fourth"></button>
+                <button type="submit" class="fa fa-star fa-3x btns" id="fifth"></button>
+                <br>
+                <div id="confirm-box"></div>
+            </form>
+            
+            {% else %}
+            <h1>There is no image to rate</h1>
+            <h1>{{ avg_rate.score__avg }}</h1>
+            <h1>{{ avg_rate.score__min }}</h1>
+            <h1>{{ avg_rate.score__max }}</h1>
+            {% endif %}
                             </p>
                             <h3><a href="{{ y.products_url }}">{{ y.title }}</a></h3>
                             <h5>${{ y.price }}</h5>
@@ -31,4 +51,20 @@
     </div>
     <!--/.container-->
 
+
+    <style>
+    .checked {
+        color: orange;
+    }
+    .btns {
+        background-color: inherit !important;
+        border: 0 !important;
+    }
+    </style>
+    
+    
+    
+            
+            <script src="{% static 'main.js' %}"></script>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </section>
