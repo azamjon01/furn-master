@@ -1,10 +1,11 @@
+from audioop import avg
 from django.shortcuts import render, redirect, reverse
 from django.views import generic
 from furn.models import *
 from furn.form import *
 from django.db.models import Q
 from django.http import JsonResponse
-from django.db.models import Avg, Max, Min
+from django.db.models import Avg
 
 
 def home(request):
@@ -119,8 +120,10 @@ def profile(request):
 
 def rate(request):
     rate = Rating.objects.filter(score=0).order_by('?').first()
+    avg_rate = Rating.objects.aggregate(Avg("score"))
     context = {
-        "rate": rate
+        "rate": rate,
+        "avg_rate": avg_rate
     }
     return render(request, 'includes/rate.html', context)
 
