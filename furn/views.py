@@ -8,13 +8,7 @@ from django.db.models import Avg, Max, Min
 
 
 def home(request):
-	rate = Rating.objects.filter(score=0).order_by("?").first()
-	avg_rate = Rating.objects.aggregate(Avg("score"), Max("score"), Min("score"))
-	context = {
-		"rate": rate,
-		"avg_rate": avg_rate,
-	}
-	return render(request, 'home.html', context)
+	return render(request, 'home.html')
 
 def rate_image(request):
 	if request.method == "POST":
@@ -123,4 +117,10 @@ def profile(request):
     
 #     return render(request, 'pages/profile-edit.html', context)
 
+def rate(request):
+    rate = Rating.objects.filter(score=0).order_by('?').first()
+    context = {
+        "rate": rate
+    }
+    return render(request, 'includes/rate.html', context)
 
