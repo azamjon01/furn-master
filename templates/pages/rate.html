@@ -1,0 +1,113 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Rate{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<section id="feature" class="feature">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured product</h2>
+        </div>
+        <!--/.section-header-->
+        <div class="feature-content">
+            <div class="row">
+                <div class="col-sm-3 d-grid" id="main_form">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="single-feature">
+                            <img src="{{ rate.img.url }}" alt="feature image" width="300" height="300">
+                            <div class="single-feature-txt text-center">
+                                <p>
+                                    <i class="fa-solid fa-star stars" id="1"></i>
+                                    <i class="fa-solid fa-star stars" id="2"></i>
+                                    <i class="fa-solid fa-star stars" id="3"></i>
+                                    <i class="fa-solid fa-star stars" id="4"></i>
+                                    <i class="fa-solid fa-star stars" id="5"></i>
+                                </p>
+                                {{ rate_form }}
+                                <div class="rate_num">{{ rate.rating }}</div>
+                                <h3><a href="#" class="product_title">{{ rate.title }}</a></h3>
+                                <h5>${{ rate.price }}</h5>
+                                <button type="submit" class="btn btn-primary" id="rate_btn">Rate product</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.container-->
+
+</section>
+
+
+<style>
+    #main_form *{
+        display: grid;
+        margin-top: 10px;
+    }
+    #main_form p{
+        display: flex;
+        font-size: 30px;
+        align-items: center;
+        justify-content: center;
+    }
+    #id_rating{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .yellow{
+        color: yellow !important;
+    }
+    .gray{
+        color: gray !important;
+    }
+</style>
+
+<script>
+    let product_title = document.querySelector('.product_title')
+    let secret_input = document.querySelector('#id_secret')
+    let rate_input = document.querySelector('#id_rating')
+    let rate_num = document.querySelector('.rate_num')
+    let rate_btn = document.querySelector('#rate_btn')
+    let ratings = document.querySelectorAll('.stars')
+
+    ratings.forEach(function(star){
+        let labels = document.querySelectorAll('label')
+        labels.forEach(function(label){
+            label.remove()
+        })
+
+        star.classList.add('gray')
+        for(let i=0;i<rate_num.textContent;i++){
+            ratings[i].classList.add('yellow')
+            ratings[i].classList.remove('gray')
+            rate_input.style.display = 'none'
+            secret_input.style.display = 'none'
+            rate_input.value = rate_num.textContent
+            secret_input.value = product_title.textContent
+        }
+    })
+    setInterval(() => {
+        ratings.forEach(function(item){
+            item.addEventListener('click', function(){
+            for(let i=0; i<item.id; i++){
+                ratings[i].classList.add('yellow')
+                ratings[i].classList.remove('gray')
+            }
+            for(let i=item.id; i<ratings.length ;i++){
+                ratings[i].classList.add('gray')
+                ratings[i].classList.remove('yellow')
+            }
+            rate_input.value = item.id
+        })
+        })
+    }, 10);
+
+
+
+</script>
+
+{% endblock %}

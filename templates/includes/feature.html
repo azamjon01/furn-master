@@ -1,5 +1,4 @@
 {% load static %}
-
 <section id="feature" class="feature">
     <div class="container">
         <div class="section-header">
@@ -9,45 +8,56 @@
         <div class="feature-content">
             <div class="row">
                 {% for y in products %}
+                {% if y.img %}
                 <div class="col-sm-3">
                     <div class="single-feature">
-                        <img src="{{ y.img.url }}" alt="feature image" width="300">
+                        
+                        <img src="{{ y.img.url }}" alt="feature image" style="width: 300px !important;height: 300px !important;border:1px solid black">
                         <div class="single-feature-txt text-center">
                             <p>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <span class="spacial-feature-icon"><i class="fa fa-star"></i></span>
-                                <span class="feature-review">(45 review)</span>
+                                <i class="fa fa-star starts_main" id="1"></i>
+                                <i class="fa fa-star starts_main" id="2"></i>
+                                <i class="fa fa-star starts_main" id="3"></i>
+                                <i class="fa fa-star starts_main" id="4"></i>
+                                <i class="fa fa-star starts_main" id="5"></i>
                             </p>
-
-                            <h3><a href="{{ y.products_url }}">{{ y.title }}</a></h3>
+                            <h3><a href="{% url 'furn:rate_product' y.pk %}">{{ y.title }}</a></h3>
+                            <h1 class="rate_text">{{ y.rating }}</h1>
                             <h5>${{ y.price }}</h5>
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
     </div>
     <!--/.container-->
 
-
-    <style>
-        .checked {
-            color: orange;
-        }
-
-        .btns {
-            background-color: inherit !important;
-            border: 0 !important;
-        }
-    </style>
-
-
-
-
-    <script src="{% static 'main.js' %}"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </section>
+
+
+
+<style>
+    .yellow{
+        color: yellow !important;
+    }
+    .gray{
+        color: gray !important;
+    }
+</style>
+
+<script>
+    let rate_num = document.querySelectorAll('.rate_text')
+    rate_num.forEach(function(rate_num_parent){
+        let ratings = rate_num_parent.parentNode.querySelectorAll('.starts_main')
+        ratings.forEach(function(star){
+        star.classList.add('gray')
+        for(let i=0;i<rate_num_parent.textContent;i++){
+            rate_num_parent.remove()
+            ratings[i].classList.add('yellow')
+            ratings[i].classList.remove('gray')
+        }
+        })
+    })
+</script>

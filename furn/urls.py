@@ -11,8 +11,9 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', logout_redirect, name='logout-redirect'),
     path('logout-link', LogoutView.as_view(), name='logout-link'),
+    path('<int:pk>-rate', rate_fun, name='rate_product'),
     path('<int:pk>/details/', arrivals_detail, name='arrival_detail'),
     path('rate-image/', rate_image, name='rate'),
-    path('rate/', rate, name='rate-s')
+    # path('rate/', rate, name='rate-s')
     
 ]

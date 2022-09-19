@@ -88,6 +88,10 @@ class Blog(models.Model):
 
 
 class Product(models.Model):
+    rating = models.CharField(max_length=10, default='2')
+    secret = models.CharField(max_length=10, default='null')
+    
+    
     img = models.ImageField()
     title = models.CharField(max_length=200)
     price = models.IntegerField(default=1)

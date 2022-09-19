@@ -1,7 +1,7 @@
 from dataclasses import field
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.contrib.auth import get_user_model
-from furn.models import Profile, Contact
+from furn.models import Profile, Contact, Product
 from django import forms
 
 User = get_user_model()
@@ -25,5 +25,10 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = ['full_name', 'email', 'choices', 'mobile', 'message']
-        
+
+
+class Product_Rate_Form(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['rating', 'secret']   
 

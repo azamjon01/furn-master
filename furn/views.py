@@ -118,12 +118,31 @@ def profile(request):
     
 #     return render(request, 'pages/profile-edit.html', context)
 
-def rate(request):
-    rate = Rating.objects.filter(score=0).order_by('?').first()
-    avg_rate = Rating.objects.aggregate(Avg("score"))
+# def rate(request, pk):
+#     rate = Product.objects.get(id=pk)
+#     rate = Rating.objects.filter(score=0).order_by('?').first()
+#     avg_rate = Rating.objects.aggregate(Avg("score"))
+#     context = {
+#         "rate": rate,
+#         "avg_rate": avg_rate
+#     }
+#     return render(request, 'includes/rate.html', context)
+
+
+def rate_fun(request, pk):
+    rate = Product.objects.get(id=pk)
+    avg_rate = Product.objects.aggregate(Avg("rating"))
+    if request.method == 'POST':
+        rate_form = Product_Rate_Form(request.POST, instance=rate)
+        if rate_form.is_valid():
+            rate_form.save()
+        return redirect('furn:home')
+    else:
+        rate_form = Product_Rate_Form(instance=rate)
+
     context = {
         "rate": rate,
-        "avg_rate": avg_rate
+        "avg_rate": avg_rate,
+        "rate_form": rate_form,
     }
-    return render(request, 'includes/rate.html', context)
-
+    return render(request, 'pages/rate.html', context)
