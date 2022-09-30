@@ -1,5 +1,6 @@
 from pathlib import Path
 import environ
+from django.utils.translation import gettext_lazy as _
 
 env = environ.Env(
     DEBUG=(bool, True)
@@ -39,13 +40,16 @@ INSTALLED_APPS = [
     'dashboard',
 
     'widget_tweaks',
-
+    
+    
+    'rosetta',
     
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -108,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'uz'
 
 TIME_ZONE = 'UTC'
 
@@ -116,7 +120,13 @@ USE_I18N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('uz', _('Uzbek')),
+    ('en', _('English')),
+]
 
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
+MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'en'
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/logout"
