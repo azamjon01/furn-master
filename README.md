@@ -11,3 +11,4 @@ python manage.py makemessages --all
 pip install django-modeltranslation
 python -m pip install --upgrade pip
 pip install django-i18n
+    https://www.youtube.com/watch?v=aSTTJd5JMXg
